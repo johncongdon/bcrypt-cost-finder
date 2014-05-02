@@ -5,10 +5,12 @@
 require '../password_compat/lib/password.php';
 
 print "Starting\n";
-run_tests();
+$start = (int)$argv[1] ? (int)$argv[1] : 4;
+$end = (int)$argv[2] ? (int)$argv[2] : 20;
+run_tests($start, $end);
 
-function run_tests() {
-    for ($cost=4; $cost<=20; $cost++) {
+function run_tests($start = 4, $end = 20) {
+    for ($cost=$start; $cost<=$end; $cost++) {
         $time = run_test($cost);
         echo "Cost of $cost took an average of $time seconds\n";
         flush();
