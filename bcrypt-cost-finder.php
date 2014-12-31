@@ -2,8 +2,12 @@
 
 # Uncomment and change the path to your version of password_compat.php
 # This can be obtained at https://github.com/ircmaxell/password_compat
-require '../password_compat/lib/password.php';
+if ( ! function_exists('password_hash')) {
 
+require '../password_compat/lib/password.php';
+}
+
+ob_end_flush();
 print "Starting\n";
 $start = (int)$argv[1] ? (int)$argv[1] : 4;
 $end = (int)$argv[2] ? (int)$argv[2] : 20;
@@ -16,6 +20,7 @@ function run_tests($start = 4, $end = 20) {
         flush();
         if ($time > 2)
         {
+            echo "At this point the time is over 2 seconds, let's not get carried away\n";
             exit;
         }
     }
@@ -23,14 +28,11 @@ function run_tests($start = 4, $end = 20) {
 
 function run_test($cost) {
     $start = microtime(1);
-    $max_loops = 100;
-    for ($loop = 1; $loop <= $max_loops; $loop++) {
-        password_hash('DumbExample', PASSWORD_DEFAULT, array("cost" => $cost));
-    }
+    $hash = password_hash('DumbExample', PASSWORD_DEFAULT, array("cost" => $cost));
     $end = microtime(1);
     $total_time = $end - $start;
     $avg_time = $total_time / $max_loops;
 
-    return $avg_time;
+    return $total_time;;
 }
 
