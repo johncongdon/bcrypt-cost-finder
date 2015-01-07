@@ -1,6 +1,6 @@
 <?php
 
-# Uncomment and change the path to your version of password_compat.php
+# If you are running PHP < 5.5 change the path to your version of password_compat.php
 # This can be obtained at https://github.com/ircmaxell/password_compat
 if ( ! function_exists('password_hash')) {
 
